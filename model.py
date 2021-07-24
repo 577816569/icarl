@@ -81,9 +81,9 @@ class iCaRLNet(nn.Module):
                     ex = Variable(transform(Image.fromarray(ex)), volatile=True).cuda()
                     feature = self.feature_extractor(ex.unsqueeze(0))
                     feature = feature.squeeze()
-                    feature.data = feature.data / feature.data.norm() # Normalize
+                    feature.data = feature.data / feature.data.norm() # Normalize 可以把data换成detach
                     features.append(feature)
-                features = torch.stack(features)
+                features = torch.stack(features) #stack用于堆叠张量
                 mu_y = features.mean(0).squeeze()
                 mu_y.data = mu_y.data / mu_y.data.norm() # Normalize
                 exemplar_means.append(mu_y)
